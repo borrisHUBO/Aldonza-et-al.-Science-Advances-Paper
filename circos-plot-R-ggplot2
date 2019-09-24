@@ -1,0 +1,18 @@
+library(ggplot2)
+
+data_filename = readline(prompt='Enter filename: , ex)result_Docetaxel.csv')
+
+data=read.csv(data_filename)
+names(data)=c('Drug','Percentage','Interest')
+ax=length(unique(data$Drug))
+
+plot=ggplot(data,aes(Drug,Percentage))+geom_bar(stat='identity',aes(fill=Interest))+scale_x_discrete(limits=data$Drug)+theme(panel.background=element_rect(fill='white'))
+
+plot2=plot+coord_polar()+theme(axis.text.x=element_text(angle=360/(2*pi)*rev(seq(pi/ax,2*pi-pi/ax,len=ax))+90,size=3))
+
+
+
+pdf(paste(data_filename,".pdf",sep="_"))
+plot(plot2)
+dev.off()
+
